@@ -125,6 +125,7 @@ public class Entry
         {
 
             Console.Write("Add Item to Checkout: ");
+            
             string search = Console.ReadLine();
 
             if (search.ToLower().Contains("!q"))
@@ -142,10 +143,11 @@ public class Entry
             }
             else
             {
-                Console.Write("Select Quantity: ");
+                
                 Item found = SearchForItem(search);
                 if (found != null)
                 {
+                    Console.Write("Select Quantity: ");
                     string? inputAmount = Console.ReadLine();
                     bool parseSuccess = int.TryParse(inputAmount, out int selectedNumber);
 
@@ -155,6 +157,10 @@ public class Entry
                         CalcTotal();
                         printCheckoutList();
                     }
+                }
+
+                else{
+                    Console.WriteLine("Item not found. Try again.");
                 }
             }
         }

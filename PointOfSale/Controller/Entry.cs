@@ -1,8 +1,3 @@
-
-using System.Security.Cryptography.X509Certificates;
-using Azure;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.VisualBasic;
 using PointOfSaleApp.Entities;
 using PointOfSaleApp.Service;
 

@@ -12,6 +12,8 @@ public class ItemService : IService<Item>
         this.itemDAO = itemDAO;
     }
 
+      public ItemService(){}
+
     public void Create(Item item)
     {
        itemDAO.Create(item);
@@ -22,7 +24,7 @@ public class ItemService : IService<Item>
         itemDAO.Delete(item);
     }
 
-    public ICollection<Item> GetAll()
+    public virtual ICollection<Item> GetAll()
     {
        return itemDAO.GetAll();
     }

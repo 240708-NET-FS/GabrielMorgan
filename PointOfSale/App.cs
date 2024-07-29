@@ -23,12 +23,6 @@ public class App{
             Home homeController = new Home(itemService, purchaseService, receiptService);
             State.isActive = true;
 
-            // List<Item> items = (List<Item>)itemService.GetAll();
-
-            // foreach(Item i in items){
-            //     Console.WriteLine(i.ItemName);
-            // }
-
             homeController.Show();
         }
        

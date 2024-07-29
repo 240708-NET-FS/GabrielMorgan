@@ -1,8 +1,3 @@
-
-using System.Security.Cryptography.X509Certificates;
-using Azure;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.VisualBasic;
 using PointOfSaleApp.Entities;
 using PointOfSaleApp.Service;
 
@@ -21,15 +16,8 @@ public class Entry
     ReceiptService receiptService;
 
     Receipt currentReceipt;
-    DateTime currentTime;
     List<Item> availableItems;
-    List<ItemQuantity> checkOut;
-
-
-
- 
-
-
+    public List<ItemQuantity> CheckOut;
 
 
     double total;
@@ -38,17 +26,18 @@ public class Entry
                     PurchaseService pService,
                     ReceiptService rService)
     {
-        currentTime = new DateTime();
         currentReceipt = new Receipt();
-        checkOut = new List<ItemQuantity>();
+        CheckOut = new List<ItemQuantity>();
         itemService = iService;
         purchaseService = pService;
         receiptService = rService;
         availableItems = (List<Item>?)itemService.GetAll();
-        inputItems();
+        Console.Clear();
+        printInstructions();
+        InputItems();
     }
 
-    void printAvailable()
+    public void PrintAvailable()
     {
         foreach (Item i in availableItems)
         {
@@ -56,16 +45,20 @@ public class Entry
         }
     }
 
-    void CalcTotal()
+   public List<Item> getAvailable(){
+        return availableItems;
+    }
+
+    public void CalcTotal()
     {
         this.total = 0;
-        foreach (ItemQuantity itemQuantity in checkOut)
+        foreach (ItemQuantity itemQuantity in CheckOut)
         {
             total += Math.Round(itemQuantity.Item.ItemPrice * itemQuantity.Quantity, 2);
         }
     }
 
-    double getTotal()
+    public double GetTotal()
     {
         return Math.Round(this.total, 2);
     }
@@ -73,20 +66,21 @@ public class Entry
     void printCheckoutList()
     {
         Console.Clear();
+        int bottomLine = Console.WindowHeight - 1;
 
-        Console.WriteLine("Item_Name" + '\t' + "Price" + '\t' + "Quantity");
-        foreach (ItemQuantity itemQ in checkOut)
+        Console.WriteLine("Item Name".PadRight(20) + '\t' + "Price" + '\t' + "Quantity");
+        foreach (ItemQuantity itemQ in CheckOut)
         {
-            Console.WriteLine(itemQ.Item.ItemName + '\t' + itemQ.Item.ItemPrice + '\t' + itemQ.Quantity);
+            Console.WriteLine(itemQ.Item.ItemName.PadRight(20) + '\t' + itemQ.Item.ItemPrice + '\t' + itemQ.Quantity);
         }
-
-        Console.WriteLine("total: " + getTotal());
+        Console.SetCursorPosition(29, bottomLine -1);
+        Console.WriteLine("total: " + GetTotal());
     }
 
     void completeCheckout(){
         createReceipt();
 
-        foreach(ItemQuantity i in checkOut){
+        foreach(ItemQuantity i in CheckOut){
             Purchase p = new Purchase
             {
                 ReceiptID = currentReceipt.ReceiptID,
@@ -94,11 +88,16 @@ public class Entry
                 ItemQuantity = i.Quantity
             };
             purchaseService.Create(p);
+
+            Console.Clear();
+            Console.WriteLine("Purchase Complete. Press any key (Not Enter) to continue");
+            Console.ReadKey();
+            Console.Clear();
         }
     }
 
     void createReceipt(){
-        this.currentReceipt.Total = getTotal();
+        this.currentReceipt.Total = GetTotal();
         this.currentReceipt.PurchaseDate = DateTime.Now;
         this.currentReceipt = receiptService.CreateAndGetReceipt(this.currentReceipt);
     }
@@ -107,7 +106,7 @@ public class Entry
     {
         foreach (Item i in availableItems)
         {
-            if (i.ItemName.ToLower().Contains(term.ToLower()))
+            if (i.ItemName.ToLower().Trim(' ').Contains(term.ToLower().Trim(' ')))
             {
                 return i;
             }
@@ -116,15 +115,29 @@ public class Entry
         return null;
     }
 
-    void inputItems()
+    void printInstructions(){
+        Console.WriteLine("Entry Mode Instructions");
+        Console.WriteLine("!i for inventory");
+        Console.WriteLine("!c to complete checkout");
+        Console.WriteLine("!q to quit to home.");
+
+        Console.WriteLine("Otherwise, type an item name to enter it into the cart.");
+    }
+
+    public void InputItems()
     {
+
+        int bottomLine = Console.WindowHeight - 1;
 
         bool done = false;
 
         while (!done)
         {
 
+            Console.SetCursorPosition(0, bottomLine);
+            Console.Write("(Entry) ");
             Console.Write("Add Item to Checkout: ");
+            
             string search = Console.ReadLine();
 
             if (search.ToLower().Contains("!q"))
@@ -138,23 +151,34 @@ public class Entry
                 done = true;
             } else 
             if (search.ToLower().Contains("!i")){
-                printAvailable();
+                PrintAvailable();
             }
             else
             {
-                Console.Write("Select Quantity: ");
+                
                 Item found = SearchForItem(search);
                 if (found != null)
                 {
+                    Console.SetCursorPosition(0, bottomLine);
+                    Console.Write("(Entry) ");
+                    Console.Write("Select Quantity: ");
                     string? inputAmount = Console.ReadLine();
                     bool parseSuccess = int.TryParse(inputAmount, out int selectedNumber);
 
                     if (parseSuccess)
                     {
-                        checkOut.Add(new ItemQuantity { Item = found, Quantity = selectedNumber });
+                        CheckOut.Add(new ItemQuantity { Item = found, Quantity = selectedNumber });
                         CalcTotal();
                         printCheckoutList();
+                    } else {
+                        Console.Write("(Entry) ");
+                        Console.WriteLine("Improper Quantity. Try Again.");
                     }
+                }
+
+                else{
+                    Console.Write("(Entry) ");
+                    Console.WriteLine("Item not found. Try again.");
                 }
             }
         }

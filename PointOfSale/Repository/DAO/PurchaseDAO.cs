@@ -12,6 +12,8 @@ public class PurchaseDAO : IDAO<Purchase>
     {
         this.context = context;
     }
+
+    public PurchaseDAO(){}
     public void Create(Purchase entry)
     {
         context.Purchases.Add(entry);

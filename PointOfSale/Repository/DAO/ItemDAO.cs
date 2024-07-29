@@ -12,6 +12,8 @@ public class ItemDAO : IDAO<Item>
         this.context = context;
     }
 
+    public ItemDAO(){}
+
     public void Create(Item entry)
     {
         context.Items.Add(entry);

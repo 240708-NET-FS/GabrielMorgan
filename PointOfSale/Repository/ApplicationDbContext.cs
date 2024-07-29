@@ -15,6 +15,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<Receipt> Receipts {get; set;}
     public DbSet<Purchase> Purchases {get; set;}
 
+    
+
 
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

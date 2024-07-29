@@ -12,6 +12,8 @@ public class PurchaseService : IService<Purchase>
         this.purchaseDAO = purchaseDAO;
     }
 
+    public PurchaseService(){}
+
     public void Create(Purchase purchase)
     {
        purchaseDAO.Create(purchase);

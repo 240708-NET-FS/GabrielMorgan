@@ -277,3 +277,4 @@ C:\Users\Gabe\Documents\revature training\PointOfSaleProject\PointOfSale\obj\Deb
 C:\Users\Gabe\Documents\revature training\PointOfSaleProject\PointOfSale\obj\Debug\net8.0\PointOfSale.pdb
 C:\Users\Gabe\Documents\revature training\PointOfSaleProject\PointOfSale\obj\Debug\net8.0\PointOfSale.genruntimeconfig.cache
 C:\Users\Gabe\Documents\revature training\PointOfSaleProject\PointOfSale\obj\Debug\net8.0\ref\PointOfSale.dll
+C:\Users\Gabe\Documents\revature training\PointOfSaleProject\PointOfSale\obj\Debug\net8.0\PointOfSale.sourcelink.json

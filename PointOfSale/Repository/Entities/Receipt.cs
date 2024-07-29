@@ -3,5 +3,5 @@ public class Receipt {
     public double Total{get; set;}
     public DateTime PurchaseDate{get; set;}
 
-     public ICollection<Purchase> Purchases {get;set;}
+    //  public ICollection<Purchase> Purchases {get;set;}
 }

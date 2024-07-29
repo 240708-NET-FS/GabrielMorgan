@@ -12,6 +12,8 @@ public class ReceiptDAO : IDAO<Receipt>
     {
         this.context = context;
     }
+
+    public ReceiptDAO(){}
     public void Create(Receipt receipt)
     {
         context.Receipts.Add(receipt);

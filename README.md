@@ -1,7 +1,10 @@
 # GabrielMorgan
 Repo for Gabriel Morgan
 
+
 Project 1: Point of Sale or Register App
+
+Using The Application
 
 Upon starting, the application will display instructions and enter the item entry mode.
 Instructions
@@ -28,6 +31,7 @@ Exiting Entry Mode
     Use the !q Command: Type !q to quit the entry mode and return to the home screen.
 
 Features
+
 
     Item Search: Searches for items by name, ignoring case.
     Inventory Display: Lists all available items in the inventory.

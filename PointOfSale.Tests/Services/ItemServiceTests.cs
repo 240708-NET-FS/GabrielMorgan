@@ -1,9 +1,6 @@
-using Moq;
-using Xunit;
 using PointOfSaleApp.DAO;
 using PointOfSaleApp.Entities;
 using PointOfSaleApp.Service;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace PointOfSale.Tests;

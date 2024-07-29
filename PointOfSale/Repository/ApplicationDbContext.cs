@@ -35,10 +35,7 @@ public class ApplicationDbContext : DbContext
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-    //    modelBuilder.Entity<Item>().HasMany(i => i.Purchases).WithMany(p => p.Items);
-    //    modelBuilder.Entity<Receipt>().HasMany(r => r.Purchases).WithMany(p => p.Receipts);
-    }
+    {}
 
 
     

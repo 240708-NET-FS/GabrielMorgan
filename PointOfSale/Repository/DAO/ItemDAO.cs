@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using PointOfSaleApp.Entities;
 
 namespace PointOfSaleApp.DAO;

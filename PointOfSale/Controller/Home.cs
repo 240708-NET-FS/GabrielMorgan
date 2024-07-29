@@ -10,6 +10,7 @@ public class Home
 
     public Home(ItemService itemService, PurchaseService purchaseService, ReceiptService receiptService)
     {
+        Console.Clear();
         this.itemService = itemService;
         this.purchaseService = purchaseService;
         this.receiptService = receiptService;

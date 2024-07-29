@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using PointOfSaleApp.DAO;
 using PointOfSaleApp.Entities;
 using PointOfSaleApp.Service;
-using System.Threading.Tasks;
 
 
 
@@ -18,6 +17,7 @@ public class PurchaseServiceTests
 
 
 
+    [Fact]
        public void Test_AddPurchaseToDatabase()
     {
         var options = GetInMemoryDbContextOptions();

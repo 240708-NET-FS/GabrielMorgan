@@ -29,7 +29,7 @@ Exiting Entry Mode
 
 Features
 
-    Item Search: Searches for items by name, ignoring case and whitespace.
+    Item Search: Searches for items by name, ignoring case.
     Inventory Display: Lists all available items in the inventory.
     Cart Management: Allows adding items with specified quantities to the cart.
     Receipt Generation: Creates and stores a receipt upon checkout completion.

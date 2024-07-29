@@ -90,7 +90,7 @@ public class Entry
             purchaseService.Create(p);
 
             Console.Clear();
-            Console.WriteLine("Purchase Complete. Press any key to continue");
+            Console.WriteLine("Purchase Complete. Press any key (Not Enter) to continue");
             Console.ReadKey();
             Console.Clear();
         }

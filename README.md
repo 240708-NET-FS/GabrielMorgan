@@ -2,7 +2,9 @@
 Repo for Gabriel Morgan
 
 
-Using the Application
+Project 1: Point of Sale or Register App
+
+Using The Application
 
 Upon starting, the application will display instructions and enter the item entry mode.
 Instructions
@@ -30,17 +32,9 @@ Exiting Entry Mode
 
 Features
 
-    Item Search: Searches for items by name, ignoring case and whitespace.
+
+    Item Search: Searches for items by name, ignoring case.
     Inventory Display: Lists all available items in the inventory.
     Cart Management: Allows adding items with specified quantities to the cart.
     Receipt Generation: Creates and stores a receipt upon checkout completion.
     Dynamic Interface: Updates the console dynamically with the latest cart and inventory status.
-
-Handling Special Cases
-
-    Item Not Found: If an entered item name does not match any available item, a message will prompt the user to try again.
-    Invalid Quantity: If the entered quantity is not a valid number, an error message will prompt the user to enter a valid quantity.
-
-Customization
-
-Developers can customize the behavior of the Entry class by modifying the services provided or the logic within methods like InputItems, PrintAvailable, and completeCheckout.

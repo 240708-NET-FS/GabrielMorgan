@@ -47,10 +47,10 @@ public class Home
         printLogo();
         printOptions();
 
-        Console.Write("Home:");
+        Console.Write("(Home) ");
         string? response = Console.ReadLine();
         bool parseSuccess = int.TryParse(response, out int selectedNumber);
-        if (parseSuccess && selectedNumber >= 1 && selectedNumber <= 3)
+        if (parseSuccess && selectedNumber >= 1 && selectedNumber <= 2)
         {
 
             if (selectedNumber == 1)
@@ -62,9 +62,6 @@ public class Home
             {
                 return;
             }
-
-
-
         }
 
        

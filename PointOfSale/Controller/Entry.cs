@@ -37,6 +37,8 @@ public class Entry
         purchaseService = pService;
         receiptService = rService;
         availableItems = (List<Item>?)itemService.GetAll();
+        Console.Clear();
+        printInstructions();
         InputItems();
     }
 
@@ -69,13 +71,14 @@ public class Entry
     void printCheckoutList()
     {
         Console.Clear();
+        int bottomLine = Console.WindowHeight - 1;
 
-        Console.WriteLine("Item_Name" + '\t' + "Price" + '\t' + "Quantity");
+        Console.WriteLine("Item Name".PadRight(20) + '\t' + "Price" + '\t' + "Quantity");
         foreach (ItemQuantity itemQ in CheckOut)
         {
-            Console.WriteLine(itemQ.Item.ItemName + '\t' + itemQ.Item.ItemPrice + '\t' + itemQ.Quantity);
+            Console.WriteLine(itemQ.Item.ItemName.PadRight(20) + '\t' + itemQ.Item.ItemPrice + '\t' + itemQ.Quantity);
         }
-
+        Console.SetCursorPosition(29, bottomLine -1);
         Console.WriteLine("total: " + GetTotal());
     }
 
@@ -90,6 +93,11 @@ public class Entry
                 ItemQuantity = i.Quantity
             };
             purchaseService.Create(p);
+
+            Console.Clear();
+            Console.WriteLine("Purchase Complete. Press any key to continue");
+            Console.ReadKey();
+            Console.Clear();
         }
     }
 
@@ -112,14 +120,27 @@ public class Entry
         return null;
     }
 
+    void printInstructions(){
+        Console.WriteLine("Entry Mode Instructions");
+        Console.WriteLine("!i for inventory");
+        Console.WriteLine("!c to complete checkout");
+        Console.WriteLine("!q to quit to home.");
+
+        Console.WriteLine("Otherwise, type an item name to enter it into the cart.");
+    }
+
     public void InputItems()
     {
+
+        int bottomLine = Console.WindowHeight - 1;
 
         bool done = false;
 
         while (!done)
         {
 
+            Console.SetCursorPosition(0, bottomLine);
+            Console.Write("(Entry) ");
             Console.Write("Add Item to Checkout: ");
             
             string search = Console.ReadLine();
@@ -143,6 +164,8 @@ public class Entry
                 Item found = SearchForItem(search);
                 if (found != null)
                 {
+                    Console.SetCursorPosition(0, bottomLine);
+                    Console.Write("(Entry) ");
                     Console.Write("Select Quantity: ");
                     string? inputAmount = Console.ReadLine();
                     bool parseSuccess = int.TryParse(inputAmount, out int selectedNumber);
@@ -153,11 +176,13 @@ public class Entry
                         CalcTotal();
                         printCheckoutList();
                     } else {
+                        Console.Write("(Entry) ");
                         Console.WriteLine("Improper Quantity. Try Again.");
                     }
                 }
 
                 else{
+                    Console.Write("(Entry) ");
                     Console.WriteLine("Item not found. Try again.");
                 }
             }

@@ -21,15 +21,8 @@ public class Entry
     ReceiptService receiptService;
 
     Receipt currentReceipt;
-    DateTime currentTime;
     List<Item> availableItems;
-    List<ItemQuantity> checkOut;
-
-
-
- 
-
-
+    public List<ItemQuantity> CheckOut;
 
 
     double total;
@@ -38,17 +31,16 @@ public class Entry
                     PurchaseService pService,
                     ReceiptService rService)
     {
-        currentTime = new DateTime();
         currentReceipt = new Receipt();
-        checkOut = new List<ItemQuantity>();
+        CheckOut = new List<ItemQuantity>();
         itemService = iService;
         purchaseService = pService;
         receiptService = rService;
         availableItems = (List<Item>?)itemService.GetAll();
-        inputItems();
+        InputItems();
     }
 
-    void printAvailable()
+    public void PrintAvailable()
     {
         foreach (Item i in availableItems)
         {
@@ -56,16 +48,20 @@ public class Entry
         }
     }
 
-    void CalcTotal()
+   public List<Item> getAvailable(){
+        return availableItems;
+    }
+
+    public void CalcTotal()
     {
         this.total = 0;
-        foreach (ItemQuantity itemQuantity in checkOut)
+        foreach (ItemQuantity itemQuantity in CheckOut)
         {
             total += Math.Round(itemQuantity.Item.ItemPrice * itemQuantity.Quantity, 2);
         }
     }
 
-    double getTotal()
+    public double GetTotal()
     {
         return Math.Round(this.total, 2);
     }
@@ -75,18 +71,18 @@ public class Entry
         Console.Clear();
 
         Console.WriteLine("Item_Name" + '\t' + "Price" + '\t' + "Quantity");
-        foreach (ItemQuantity itemQ in checkOut)
+        foreach (ItemQuantity itemQ in CheckOut)
         {
             Console.WriteLine(itemQ.Item.ItemName + '\t' + itemQ.Item.ItemPrice + '\t' + itemQ.Quantity);
         }
 
-        Console.WriteLine("total: " + getTotal());
+        Console.WriteLine("total: " + GetTotal());
     }
 
     void completeCheckout(){
         createReceipt();
 
-        foreach(ItemQuantity i in checkOut){
+        foreach(ItemQuantity i in CheckOut){
             Purchase p = new Purchase
             {
                 ReceiptID = currentReceipt.ReceiptID,
@@ -98,7 +94,7 @@ public class Entry
     }
 
     void createReceipt(){
-        this.currentReceipt.Total = getTotal();
+        this.currentReceipt.Total = GetTotal();
         this.currentReceipt.PurchaseDate = DateTime.Now;
         this.currentReceipt = receiptService.CreateAndGetReceipt(this.currentReceipt);
     }
@@ -107,7 +103,7 @@ public class Entry
     {
         foreach (Item i in availableItems)
         {
-            if (i.ItemName.ToLower().Contains(term.ToLower()))
+            if (i.ItemName.ToLower().Trim(' ').Contains(term.ToLower().Trim(' ')))
             {
                 return i;
             }
@@ -116,7 +112,7 @@ public class Entry
         return null;
     }
 
-    void inputItems()
+    public void InputItems()
     {
 
         bool done = false;
@@ -139,7 +135,7 @@ public class Entry
                 done = true;
             } else 
             if (search.ToLower().Contains("!i")){
-                printAvailable();
+                PrintAvailable();
             }
             else
             {
@@ -153,9 +149,11 @@ public class Entry
 
                     if (parseSuccess)
                     {
-                        checkOut.Add(new ItemQuantity { Item = found, Quantity = selectedNumber });
+                        CheckOut.Add(new ItemQuantity { Item = found, Quantity = selectedNumber });
                         CalcTotal();
                         printCheckoutList();
+                    } else {
+                        Console.WriteLine("Improper Quantity. Try Again.");
                     }
                 }
 

@@ -13,6 +13,8 @@ public class ReceiptService : IService<Receipt>
         this.ReceiptDAO = ReceiptDAO;
     }
 
+    public ReceiptService(){}
+
     public void Create(Receipt Receipt)
     {
        ReceiptDAO.Create(Receipt);

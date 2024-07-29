@@ -3,22 +3,21 @@ using PointOfSaleApp.Service;
 namespace PointOfSaleApp;
 public class Home
 {
-      ItemService itemService;
-      PurchaseService purchaseService;
+    ItemService itemService;
+    PurchaseService purchaseService;
 
-      ReceiptService receiptService;
+    ReceiptService receiptService;
 
     public Home(ItemService itemService, PurchaseService purchaseService, ReceiptService receiptService)
     {
         this.itemService = itemService;
         this.purchaseService = purchaseService;
         this.receiptService = receiptService;
-       
+
     }
 
-   public void Show(){
-        printLogo();
-        printOptions();
+    public void Show()
+    {
         navigate();
     }
 
@@ -33,7 +32,7 @@ public class Home
 
     void printOptions()
     {
-        string[] options = { "[1] Entry Mode", "[2] Records Mode", "[3] Quit" };
+        string[] options = { "[1] Entry Mode", "[2] Quit"};
         foreach (string option in options)
         {
             Console.WriteLine(option);
@@ -45,30 +44,32 @@ public class Home
     void navigate()
     {
 
+        printLogo();
+        printOptions();
+
         Console.Write("Home:");
         string? response = Console.ReadLine();
         bool parseSuccess = int.TryParse(response, out int selectedNumber);
-        if (parseSuccess && selectedNumber >= 1 && selectedNumber <= 3){
+        if (parseSuccess && selectedNumber >= 1 && selectedNumber <= 3)
+        {
 
-            if(selectedNumber == 1){
+            if (selectedNumber == 1)
+            {
                 Entry entry = new Entry(itemService, purchaseService, receiptService);
             }
 
-            if(selectedNumber == 2){
-
+            if (selectedNumber == 2)
+            {
+                return;
             }
 
-           
-             
+
+
         }
 
-        
+       
         navigate();
     }
-
-
-
-
 
 }
 
